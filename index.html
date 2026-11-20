@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Portafolio profesional de Valeria Muñeton, estudiante de Administración Tecnológica del ITM.">
+
+    <title>Valeria Muñeton | Portafolio Profesional</title>
+
+    <!-- Librería para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #75465b;
+            --secondary: #d889a8;
+            --background: #fff0f5;
+            --white: #ffffff;
+            --text: #634b57;
+            --light: #f9dce8;
+            --accent: #b85f83;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* NAVEGACIÓN */
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #f5bfd3;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #f5bfd3;
+        }
+
+        /* BOTÓN DESCARGAR PDF */
+
+        .download-btn {
+            background: #f5bfd3;
+            color: #75465b;
+            border: none;
+            padding: 11px 17px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* INICIO */
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 70px 10%;
+            background: linear-gradient(120deg, #75465b, #b86e8b);
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 750px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ffd5e5;
+        }
+
+        .hero h2 {
+            font-size: 23px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            max-width: 650px;
+            color: #fff0f5;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 13px 28px;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* SECCIONES */
+
+        section {
+            padding: 85px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 45px;
+            color: #987486;
+        }
+
+        /* SOBRE MÍ */
+
+        .about {
+            background: #fff0f5;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .professional-description {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 5px 20px rgba(117, 70, 91, 0.08);
+            text-align: justify;
+        }
+
+        .professional-description strong {
+            color: var(--accent);
+        }
+
+        /* FORMACIÓN */
+
+        #formacion {
+            background: #ffffff;
+        }
+
+        .education-card {
+            background: #fff0f5;
+            max-width: 750px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 5px 20px rgba(117, 70, 91, 0.06);
+        }
+
+        .education-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .education-card .institution {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* HABILIDADES */
+
+        .skills {
+            background: #fff0f5;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 22px;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 28px 20px;
+            text-align: center;
+            border-radius: 12px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(117, 70, 91, 0.04);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(117, 70, 91, 0.12);
+        }
+
+        .skill-card .icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .skill-card h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        /* PROYECTOS */
+
+        #proyectos {
+            background: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background: #fff0f5;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(117, 70, 91, 0.05);
+            border-top: 4px solid var(--secondary);
+        }
+
+        .project-card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .project-card p {
+            font-size: 15px;
+        }
+
+        /* CONTACTO */
+
+        .contact {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact p {
+            margin: 12px 0;
+        }
+
+        .contact a:not(.button) {
+            color: #ffd5e5;
+            text-decoration: none;
+        }
+
+        /* PIE DE PÁGINA */
+
+        footer {
+            background: #513342;
+            color: #f8dce8;
+            text-align: center;
+            padding: 22px;
+            font-size: 14px;
+        }
+
+        /* CONFIGURACIÓN DEL PDF */
+
+        @media print {
+            header {
+                position: static;
+            }
+
+            .download-btn {
+                display: none !important;
+            }
+
+            section {
+                break-inside: avoid;
+            }
+        }
+
+        /* ADAPTACIÓN A CELULARES */
+
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+            }
+
+            nav {
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .hero {
+                min-height: 75vh;
+                padding: 60px 8%;
+            }
+
+            section {
+                padding: 65px 8%;
+            }
+
+            .professional-description {
+                padding: 22px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- CONTENIDO COMPLETO DEL PORTAFOLIO -->
+
+    <div id="portafolio">
+
+        <!-- MENÚ DE NAVEGACIÓN -->
+
+        <header>
+
+            <div class="logo">
+                Valeria <span>Muñeton.</span>
+            </div>
+
+            <nav>
+                <a href="#inicio">Inicio</a>
+                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#formacion">Formación</a>
+                <a href="#habilidades">Habilidades</a>
+                <a href="#proyectos">Proyectos</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+
+            <button class="download-btn" onclick="descargarPDF()">
+                ↓ Descargar PDF
+            </button>
+
+        </header>
+
+        <!-- INICIO -->
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-content">
+
+                <h2>Bienvenido a mi portafolio profesional</h2>
+
+                <h1>Hola, soy <span>Valeria Muñeton</span></h1>
+
+                <h2>Estudiante de Administración Tecnológica</h2>
+
+                <p>
+                    Instituto Tecnológico Metropolitano (ITM) |
+                    Octavo semestre.
+                    Interesada en la innovación, la tecnología,
+                    la gestión empresarial y el aprendizaje continuo.
+                </p>
+
+                <a href="#sobre-mi" class="button">
+                    Conoce más sobre mí
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- SOBRE MÍ -->
+
+        <section class="about" id="sobre-mi">
+
+            <h2 class="section-title">Sobre mí</h2>
+
+            <p class="section-subtitle">
+                Mi perfil académico y profesional
+            </p>
+
+            <div class="about-content">
+
+                <div class="professional-description">
+
+                    <p><strong>Perfil profesional</strong></p>
+
+                    <p>
+                        Estudiante de octavo semestre de la institucion
+                        universitaria ITM, ciudadano global que cuenta
+                        con formación integral, con cualidades éticas
+                        y de autonomía para su desarrollo profesional,
+                        con capacidad para planear, organizar, dirigir,
+                        controlar y evaluar los procesos de gestión del
+                        conocimiento, tecnología e innovación,
+                        alineándolos con la estrategia para el logro
+                        de los objetivos de las organizaciones en las
+                        que interviene, lo cual le permite tomar
+                        decisiones en contextos complejos, dinámicos
+                        e inciertos.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FORMACIÓN ACADÉMICA -->
+
+        <section id="formacion">
+
+            <h2 class="section-title">Formación académica</h2>
+
+            <p class="section-subtitle">
+                Mi trayectoria educativa
+            </p>
+
+            <div class="education-card">
+
+                <h3>Administración Tecnológica</h3>
+
+                <p class="institution">
+                    Instituto Tecnológico Metropolitano (ITM)
+                </p>
+
+                <p>Octavo semestre en curso.</p>
+
+                <br>
+
+                <h3>Bachiller académico</h3>
+
+                <p>Educación media culminada.</p>
+
+                <br>
+
+                <h3>Media técnica en audiovisuales</h3>
+
+                <p>
+                    Formación técnica complementaria en el área audiovisual.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- HABILIDADES -->
+
+        <section class="skills" id="habilidades">
+
+            <h2 class="section-title">Habilidades y competencias</h2>
+
+            <p class="section-subtitle">
+                Herramientas y conocimientos en desarrollo
+            </p>
+
+            <div class="skills-grid">
+
+                <div class="skill-card">
+                    <div class="icon">📊</div>
+                    <h3>Microsoft Excel</h3>
+                    <p>Organización, gestión y análisis de información.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="icon">🎨</div>
+                    <h3>Canva</h3>
+                    <p>Diseño de presentaciones y contenido visual.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="icon">💡</div>
+                    <h3>Innovación</h3>
+                    <p>Interés en nuevas ideas y soluciones tecnológicas.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="icon">📈</div>
+                    <h3>Gestión administrativa</h3>
+                    <p>Conocimientos en procesos organizacionales y empresariales.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="icon">🔍</div>
+                    <h3>Análisis de información</h3>
+                    <p>Interés en el análisis de datos y la toma de decisiones.</p>
+                </div>
+
+                <div class="skill-card">
+                    <div class="icon">🤝</div>
+                    <h3>Aprendizaje continuo</h3>
+                    <p>Disposición para adquirir nuevos conocimientos y competencias.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PROYECTOS -->
+
+        <section id="proyectos">
+
+            <h2 class="section-title">Proyectos académicos</h2>
+
+            <p class="section-subtitle">
+                Experiencias y conocimientos desarrollados durante mi formación
+            </p>
+
+            <div class="projects-grid">
+
+                <div class="project-card">
+                    <h3>Gestión tecnológica</h3>
+                    <p>
+                        Desarrollo de actividades académicas relacionadas
+                        con la innovación, la tecnología y su aplicación
+                        en las organizaciones.
+                    </p>
+                </div>
+
+                <div class="project-card">
+                    <h3>Análisis financiero</h3>
+                    <p>
+                        Interpretación de estados financieros, indicadores
+                        y herramientas para apoyar la toma de decisiones
+                        empresariales.
+                    </p>
+                </div>
+
+                <div class="project-card">
+                    <h3>Análisis de datos</h3>
+                    <p>
+                        Exploración de herramientas para organizar,
+                        interpretar y presentar información útil
+                        para las organizaciones.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CONTACTO -->
+
+        <section class="contact" id="contacto">
+
+            <h2 class="section-title">Contacto</h2>
+
+            <p>
+                Estoy interesada en nuevas oportunidades de aprendizaje,
+                crecimiento y desarrollo profesional.
+            </p>
+
+            <p>
+                <strong>Correo electrónico:</strong><br>
+
+                <a href="mailto:valeriamuneton1116903@correo.itm.edu.co">
+                    valeriamuneton1116903@correo.itm.edu.co
+                </a>
+            </p>
+
+            <p>
+                <strong>Teléfono:</strong><br>
+
+                <a href="tel:+573147227299">
+                    +57 314 722 7299
+                </a>
+            </p>
+
+            <br>
+
+            <a class="button"
+               href="mailto:valeriamuneton1116903@correo.itm.edu.co">
+                Envíame un correo
+            </a>
+
+        </section>
+
+        <!-- PIE DE PÁGINA -->
+
+        <footer>
+
+            <p>
+                © 2026 Valeria Muñeton | Portafolio Profesional
+            </p>
+
+            <p>
+                Administración Tecnológica - ITM
+            </p>
+
+        </footer>
+
+    </div>
+
+    <!-- FUNCIÓN PARA DESCARGAR PDF -->
+
+    <script>
+
+        function descargarPDF() {
+
+            const elemento = document.getElementById('portafolio');
+
+            const opciones = {
+                margin: [8, 8, 8, 8],
+
+                filename: 'Portafolio_Profesional_Valeria_Muneton.pdf',
+
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    scrollY: 0
+                },
+
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait'
+                },
+
+                pagebreak: {
+                    mode: ['css', 'legacy']
+                }
+            };
+
+            html2pdf()
+                .set(opciones)
+                .from(elemento)
+                .save();
+        }
+
+    </script>
+
+</body>
+</html>
